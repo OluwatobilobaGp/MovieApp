@@ -1,165 +1,127 @@
-# 📱 scriptsApp
+# 🎬 Movie Explorer App
 
-`scriptsApp` is a React Native mobile project built with
-**TypeScript**.\
-It demonstrates a simple app structure with **top tab navigation** and
-**custom cards** that display horizontally scrollable content.
+A **React Native + TypeScript** mobile application for browsing, searching, and saving favorite movies using [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api).  
+Built with modern state management (**Zustand**), clean UI components, and offline persistence for favorites.  
 
-------------------------------------------------------------------------
+---
 
-## 🚀 Features
+## 📱 Features
 
--   **React Native + TypeScript** setup
--   **Top Tab Navigation** with two main screens:
-    -   🏠 Home
-    -   🧾 Smart Script
--   **Custom Card Component** with:
-    -   Background image
-    -   Title and subtitle text
-    -   Scrollable horizontally
--   **Global Font Support** (customizable in `App.tsx`)
--   Simple and scalable **file structure**
+- **Home Screen** – Browse a list of popular movies.  
+- **Search Screen** – Search movies by name.  
+- **Details Screen** – View detailed movie info (title, poster, overview, rating, release date).  
+- **Favorites** – Mark/unmark movies as favorites (saved locally using AsyncStorage).  
+- **Error, Loading, Empty States** for better UX.  
+- **Offline support** (cached favorites).  
 
-------------------------------------------------------------------------
+### 🚀 Optional / Bonus
+- Dark mode toggle 🌙  
+- Movie trailers (YouTube embed or TMDb video endpoint)  
+- Basic animations using `LayoutAnimation` or `react-native-reanimated`  
+- Push notification when new popular movie is available (local mock)  
 
-## 📂 File Structure
+---
 
-    scriptsApp/
-    │
-    ├── App.tsx                # Entry point of the app
-    ├── package.json           # Project dependencies & scripts
-    │
-    ├── src/
-    │   ├── navigation/
-    │   │   └── TopNavigator.tsx    # Top tab navigation setup
-    │   │
-    │   ├── screens/
-    │   │   ├── Home.tsx            # Home screen
-    │   │   └── SmartScript.tsx     # Smart Script screen with horizontal cards
-    │   │
-    │   ├── components/
-    │   │   ├── CustomCard.tsx      # Reusable card component
-    │   │   └── AppText.tsx         # (Optional) Custom Text wrapper for fonts
-    │   │
-    │   ├── assets/
-    │   │   ├── bg1.jpg
-    │   │   ├── bg2.jpg
-    │   │   └── bg3.jpg             # Example background images
-    │   │
-    │   └── styles/
-    │       └── global.ts           # (Optional) shared/global styles
-    │
-    └── README.md
+## 🛠️ Tech Stack
 
-------------------------------------------------------------------------
+- **React Native (TypeScript)** – App framework  
+- **Zustand** – State management  
+- **Axios** – API requests  
+- **AsyncStorage** – Persistent local storage  
+- **React Navigation** – Navigation between screens  
+- **UI Library** – `react-native-paper` (clean and modern design system)  
 
-## 📦 Installation
+---
+
+## 📂 Project Structure
+
+```
+src/
+ ├─ api/           # API services (TMDb)
+ │   └─ tmdb.ts
+ ├─ store/         # Zustand store (state management)
+ │   └─ movieStore.ts
+ ├─ screens/       # App screens (Home, Search, Details, Favorites)
+ ├─ components/    # Reusable UI components (MovieCard, Loader, etc.)
+ ├─ hooks/         # Custom React hooks (if needed)
+ └─ utils/         # Helpers and constants
+```
+
+---
+
+## ⚡ Getting Started
 
 ### 1. Clone the repository
 
-``` bash
-git clone https://github.com/your-username/scriptsApp.git
-cd scriptsApp
+```bash
+git clone https://github.com/OluwatobilobaGp/MovieApp.git
+cd movie-explorer
 ```
 
 ### 2. Install dependencies
 
-``` bash
+```bash
 npm install
 # or
 yarn install
 ```
 
-### 3. Start the development server
+### 3. Add TMDb API Key
 
-If you're using **Expo**:
+- Create a free TMDb account → [TMDb API](https://www.themoviedb.org/documentation/api)  
+- Get your API key  
+- Open `src/api/tmdb.ts` and replace:
 
-``` bash
-npx expo start
+```ts
+const API_KEY = "YOUR_TMDB_API_KEY";
 ```
 
-For bare React Native:
+### 4. Run the app
 
-``` bash
-npx react-native run-android
-npx react-native run-ios
+```bash
+npm run android
+# or
+npm run ios
 ```
 
-------------------------------------------------------------------------
+---
 
-## ⚡ Usage
+## 🧩 Usage Flow
 
--   The app opens with a **Top Tab Navigator**.
--   Navigate between **Home** and **Smart Script** tabs.
--   Inside **Smart Script**, scroll horizontally to explore **custom
-    cards**.
+1. **Home Screen** loads a list of **popular movies**.  
+2. Tap a movie → Navigate to **Details Screen**.  
+3. **Search Screen** → Search for a movie by title.  
+4. Tap ❤️ → Add/remove movies from **Favorites** (saved locally).  
+5. Favorites persist even after closing the app.  
 
-------------------------------------------------------------------------
+---
 
-## 🖼️ Screenshots (Example)
+## 📸 Demo
 
-  ---------------------------------------------------------------------------
-  Home Screen                    Smart Script Screen
-  ------------------------------ --------------------------------------------
-  ![Home                         ![Smart Script
-  Screenshot](./docs/home.png)   Screenshot](./docs/smartscript.png)
+(Add screenshots or video link here once available)
 
-  ---------------------------------------------------------------------------
+---
 
-------------------------------------------------------------------------
+## 📖 Architecture Choices
 
-## 🛠️ Dependencies
+- **Zustand over Redux Toolkit** → lightweight, faster to set up, and sufficient for this app.  
+- **Axios** → cleaner API handling with interceptors for TMDb.  
+- **AsyncStorage** → simple persistence for favorites without extra database.  
+- **React Navigation** → smooth navigation flow (stack + bottom tabs).  
+- **react-native-paper** → gives clean UI and dark mode out-of-the-box.  
 
--   [React Native](https://reactnative.dev/)
--   [React Navigation](https://reactnavigation.org/)
-    (`@react-navigation/native`, `@react-navigation/material-top-tabs`)
--   [React Native Gesture
-    Handler](https://docs.swmansion.com/react-native-gesture-handler/)
--   [React Native
-    Reanimated](https://docs.swmansion.com/react-native-reanimated/)
+---
 
-------------------------------------------------------------------------
+## ✅ Deliverables
 
-## 🎨 Custom Fonts
+- [x] GitHub repo with well-structured commits  
+- [x] Instructions to run the project (this README)  
+- [x] Brief explanation of architecture choices  
+- [x] Video of the app running on iOS/Android  
 
-To apply a **global font family**:
+---
 
-``` tsx
-// App.tsx
-import { Text } from "react-native";
+## 🧑‍💻 Author
 
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.style = { fontFamily: "Poppins-Regular" };
-```
-
-To add fonts:
-
-``` bash
-expo install expo-font
-```
-
-Then load in `App.tsx`.
-
-------------------------------------------------------------------------
-
-## 📌 Roadmap
-
--   [ ] Add carousel snapping for cards
--   [ ] Dark mode support
--   [ ] More navigation screens
--   [ ] API integration for dynamic content
-
-------------------------------------------------------------------------
-
-## 🤝 Contributing
-
-1.  Fork the repo
-2.  Create a new branch (`feature/amazing-feature`)
-3.  Commit changes
-4.  Push and create a Pull Request
-
-------------------------------------------------------------------------
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
+Built by **Asaolu Oluwatobiloba** 🚀  
+For learning, portfolio, and real-world mobile app practice.  
