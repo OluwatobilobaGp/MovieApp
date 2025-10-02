@@ -1,24 +1,85 @@
-import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import SmartScript from "./src/screens/SmartScript";
-import AdvancedScript from "./src/screens/AdvancedScript";
-import TopNavigator from "./src/components/TopNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
+
+import HomeScreen from "./src/screens/HomeScreen";
+import SearchScreen from "./src/screens/SearchScreen";
+import FavoritesScreen from "./src/screens/FavoritesScreen";
+import DetailsScreen from "./src/screens/DetailsScreen";
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function TabNavigator() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarShowLabel: true,
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 20,
+          left: 20,
+          right: 20,
+          backgroundColor: "#fff",
+          borderRadius: 30,
+          height: 80,
+          paddingVertical: 20,
+          shadowColor: "#000",
+          shadowOpacity: 0.1,
+          shadowOffset: { width: 0, height: 2 },
+          shadowRadius: 5,
+          elevation: 5,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 10,
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: keyof typeof Ionicons.glyphMap;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Search") {
+            iconName = focused ? "search" : "search-outline";
+          } else if (route.name === "Favorites") {
+            iconName = focused ? "heart" : "heart-outline";
+          }
+
+          return <Ionicons name={iconName!} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#FE8C00",
+        tabBarInactiveTintColor: "#888",
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
-  
-  
-  const [activeTab, setActiveTab] = useState<"Smart Script" | "Advanced Script">("Smart Script");
-
   return (
     <SafeAreaView style={styles.container}>
-      {/* Top Text Navigator */}
-      <TopNavigator activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      {/* Screen Content */}
-      <View style={styles.screen}>
-        {activeTab === "Smart Script" ? <SmartScript /> : <AdvancedScript />}
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {/* Tabs first */}
+          <Stack.Screen
+            name="MainTabs"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          />
+          {/* DetailsScreen for navigation */}
+          <Stack.Screen
+            name="Details"
+            component={DetailsScreen}
+            options={{ title: "Movie Details" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
@@ -37,6 +98,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Poppins-Regular", // 👈 apply your font here
+    fontFamily: "Poppins-Regular",
   },
 });

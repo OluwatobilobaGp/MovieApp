@@ -1,0 +1,127 @@
+import { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import axios from "axios";
+import Loader from "../components/Loader";
+import ErrorMessage from "../components/ErrorMessage";
+import { useFavoriteStore } from "../store/favoriteStore";
+
+const API_KEY = process.env.EXPO_PUBLIC_TMDB_APIKEY;
+const BASE_URL = process.env.EXPO_PUBLIC_TMDB_ENDPOINT;
+
+export default function DetailsScreen({ route }: any) {
+  const { movieId } = route.params;
+  const [movie, setMovie] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const addFavorite = useFavoriteStore((state) => state.addFavorite);
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+          params: { api_key: API_KEY },
+        });
+        setMovie(res.data);
+      } catch (err) {
+        setError("Failed to load movie details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMovieDetails();
+  }, [movieId]);
+
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
+  return (
+    <ScrollView style={styles.container}>
+      {/* Poster */}
+      <Image
+        source={{
+          uri: movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+            : "https://via.placeholder.com/300x450.png?text=No+Image",
+        }}
+        style={styles.poster}
+        resizeMode="cover"
+      />
+
+      {/* Movie Title */}
+      <Text style={styles.title}>{movie.title}</Text>
+
+      {/* Release Date + Rating */}
+      <Text style={styles.subInfo}>
+        Release: {movie.release_date} | ⭐ {movie.vote_average.toFixed(1)}
+      </Text>
+
+      {/* Overview */}
+      <Text style={styles.overview}>{movie.overview}</Text>
+
+      {/* Add to Favorites */}
+      <TouchableOpacity
+        onPress={() =>
+          addFavorite({
+            id: movie.id,
+            title: movie.title,
+            poster_path: movie.poster_path,
+            vote_average: movie.vote_average,
+          })
+        }
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>+ Add to Favorites</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 16,
+  },
+  poster: {
+    width: "100%",
+    height: 380,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#111",
+    marginBottom: 8,
+  },
+  subInfo: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 12,
+  },
+  overview: {
+    fontSize: 16,
+    lineHeight: 22,
+    color: "#333",
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: "#FE8C00",
+    paddingVertical: 14,
+    borderRadius: 12,
+  },
+  buttonText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#fff",
+  },
+});
