@@ -120,7 +120,7 @@ function createStyles(theme: any) {
         title: {
             fontSize: 24,
             fontWeight: "bold",
-            color: "#111",
+            color: theme.text,
             marginBottom: 8,
         },
         subInfo: {
@@ -131,7 +131,7 @@ function createStyles(theme: any) {
         overview: {
             fontSize: 16,
             lineHeight: 22,
-            color: "#333",
+            color: theme.text,
             marginBottom: 20,
         },
         button: {
@@ -143,7 +143,7 @@ function createStyles(theme: any) {
             textAlign: "center",
             fontSize: 16,
             fontWeight: "700",
-            color: "#fff",
+            color: theme.text,
         },
     });
 }

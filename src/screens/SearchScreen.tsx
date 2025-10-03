@@ -10,6 +10,8 @@ import axios from "axios";
 import MovieCard from "../components/movieCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
+import { useTheme } from '../ThemeContext';
+
 
 const API_KEY = process.env.EXPO_PUBLIC_TMDB_APIKEY;
 const BASE_URL = process.env.EXPO_PUBLIC_TMDB_ENDPOINT;
@@ -19,6 +21,9 @@ export default function SearchScreen({ navigation }: any) {
     const [results, setResults] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const { theme, mode, toggleTheme } = useTheme();
+    const styles = createStyles(theme);
 
     const searchMovies = async () => {
         if (!query.trim()) return;
@@ -80,10 +85,11 @@ export default function SearchScreen({ navigation }: any) {
     );
 }
 
-const styles = StyleSheet.create({
+function createStyles(theme: any) {
+    return StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: theme.background,
     },
     searchBox: {
         flexDirection: "row",
@@ -94,11 +100,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#ddd",
         borderRadius: 12,
-        backgroundColor: "#f9f9f9",
+        backgroundColor: theme.background,
     },
     input: {
         flex: 1,
         fontSize: 16,
-        color: "#111",
+        color: theme.text,
     },
-});
+    });
+}
+
