@@ -11,12 +11,18 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import { useFavoriteStore } from "../store/favoriteStore";
+import { useTheme } from '../ThemeContext';
+
+
+
 
 const API_KEY = process.env.EXPO_PUBLIC_TMDB_APIKEY;
 const BASE_URL = process.env.EXPO_PUBLIC_TMDB_ENDPOINT;
 
 export default function DetailsScreen({ route, navigation }: any) {
     const { movieId } = route.params;
+    const { theme, mode, toggleTheme } = useTheme();
+    const styles = createStyles(theme);
 
     const [movie, setMovie] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -85,48 +91,59 @@ export default function DetailsScreen({ route, navigation }: any) {
             >
                 <Text style={styles.buttonText}>+ Add to Favorites</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => navigation.navigate("Favorites")}
+                className="bg-primary py-3 rounded-xl mx-4 mb-4"
+            >
+                <Text className="text-white text-center text-lg font-bold">
+                    View Favorites ❤️
+                </Text>
+            </TouchableOpacity>
+            
         </ScrollView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        padding: 16,
-    },
-    poster: {
-        width: "100%",
-        height: 380,
-        borderRadius: 16,
-        marginBottom: 16,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: "#111",
-        marginBottom: 8,
-    },
-    subInfo: {
-        fontSize: 14,
-        color: "#666",
-        marginBottom: 12,
-    },
-    overview: {
-        fontSize: 16,
-        lineHeight: 22,
-        color: "#333",
-        marginBottom: 20,
-    },
-    button: {
-        backgroundColor: "#FE8C00",
-        paddingVertical: 14,
-        borderRadius: 12,
-    },
-    buttonText: {
-        textAlign: "center",
-        fontSize: 16,
-        fontWeight: "700",
-        color: "#fff",
-    },
-});
+function createStyles(theme: any) {
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: theme.background,
+            padding: 16,
+        },
+        poster: {
+            width: "100%",
+            height: 380,
+            borderRadius: 16,
+            marginBottom: 16,
+        },
+        title: {
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#111",
+            marginBottom: 8,
+        },
+        subInfo: {
+            fontSize: 14,
+            color: "#666",
+            marginBottom: 12,
+        },
+        overview: {
+            fontSize: 16,
+            lineHeight: 22,
+            color: "#333",
+            marginBottom: 20,
+        },
+        button: {
+            backgroundColor: "#FE8C00",
+            paddingVertical: 14,
+            borderRadius: 12,
+        },
+        buttonText: {
+            textAlign: "center",
+            fontSize: 16,
+            fontWeight: "700",
+            color: "#fff",
+        },
+    });
+}

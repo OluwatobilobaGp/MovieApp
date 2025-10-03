@@ -1,4 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
+import { ThemeProvider } from './src/ThemeContext';
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -64,22 +65,25 @@ function TabNavigator() {
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {/* Tabs first */}
-          <Stack.Screen
-            name="MainTabs"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          {/* DetailsScreen for navigation */}
-          <Stack.Screen
-            name="Details"
-            component={DetailsScreen}
-            options={{ title: "Movie Details" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {/* Tabs first */}
+            <Stack.Screen
+              name="MainTabs"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            {/* DetailsScreen for navigation */}
+            <Stack.Screen
+              name="Details"
+              component={DetailsScreen}
+              options={{ title: "Movie Details" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+
     </SafeAreaView>
   );
 }

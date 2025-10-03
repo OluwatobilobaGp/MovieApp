@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { View, FlatList, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { useMovieStore } from "../store/movieStore";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import MovieCard from "../components/movieCard";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from '../ThemeContext';
 
 export default function HomeScreen({ navigation }: any) {
     const { movies, loading, error, fetchPopular } = useMovieStore();
+    const { theme, mode, toggleTheme } = useTheme();
 
     useEffect(() => {
         fetchPopular();
@@ -20,8 +22,9 @@ export default function HomeScreen({ navigation }: any) {
     console.log(navigation.getState().routeNames);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>Popular Movies 🎬</Text>
+        <SafeAreaView style={{ backgroundColor: theme.background }}>
+            <Text style={[styles.header, { color: theme.text }]}>Popular Movies 🎬</Text>
+            <Button title={`Switch to ${mode === 'light' ? 'Dark' : 'Light'} Mode`} onPress={toggleTheme} />
             
             <TouchableOpacity
                 onPress={() => navigation.navigate("Favorites")}
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
         fontSize: 24, // text-2xl
         fontWeight: "700", // fallback if custom font not loaded
         margin: 16, // m-4
-        color: "#1A1A1A", // approximate text-dark-100
+        // color: "#1A1A1A", // approximate text-dark-100
         // fontFamily: "Quicksand-Bold", // if custom font loaded
     },
     listContent: {
