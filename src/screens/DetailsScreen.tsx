@@ -89,14 +89,14 @@ export default function DetailsScreen({ route, navigation }: any) {
                 <Text style={styles.buttonText}>+ Add to Favorites</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => navigation.navigate("Favorites")}
                 className="bg-primary py-3 rounded-xl mx-4 mb-4"
             >
                 <Text style={{color: theme.text}} className="text-white text-center text-lg font-bold">
                     View Favorites ❤️
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
         </ScrollView>
     );
