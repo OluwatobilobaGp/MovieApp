@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, FlatList, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useMovieStore } from "../store/movieStore";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
@@ -23,17 +23,40 @@ export default function HomeScreen({ navigation }: any) {
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background }}>
-            <Text style={[styles.header, { color: theme.text }]}>Popular Movies 🎬</Text>
-            <Button title={`Switch to ${mode === 'light' ? 'Dark' : 'Light'} Mode`} onPress={toggleTheme} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 16, marginTop: 16 }}>
+                <Text style={[styles.header, { color: theme.text, margin: 0 }]}>Popular Movies 🎬</Text>
+                <TouchableOpacity
+                    onPress={toggleTheme}
+                    style={{
+                        padding: 8,
+                        backgroundColor: '#fff',
+                        borderRadius: 20,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.3,
+                        shadowRadius: 3,
+                        elevation: 5,
+                    }}
+                >
+                    <Image
+                        source={mode === 'light'
+                            ? require('../../assets/moon.png')
+                            : require('../../assets/sun.png')
+                        }
+                        style={{ width: 32, height: 32, backgroundColor: '#fff', borderRadius: 16, padding: 4 }}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
+            </View>
             
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => navigation.navigate("Favorites")}
                 className="bg-primary py-3 rounded-xl mx-4 mb-4"
             >
                 <Text className="text-white text-center text-lg font-bold">
                     View Favorites ❤️
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <FlatList
                 data={movies}
