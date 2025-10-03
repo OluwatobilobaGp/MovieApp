@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 
 
 function TabNavigator() {
- const { theme, mode, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme } = useTheme();
 
   return (
     <Tab.Navigator
@@ -67,6 +67,8 @@ function TabNavigator() {
 }
 
 export default function App() {
+  const { theme } = useTheme();
+  
   return (
     <SafeAreaView style={styles.container}>
       <ThemeProvider>
@@ -82,7 +84,13 @@ export default function App() {
             <Stack.Screen
               name="Details"
               component={DetailsScreen}
-              options={{ title: "Movie Details" }}
+              options={{
+                title: "Movie Details",
+                headerStyle: { backgroundColor: theme.background },
+                headerTintColor: theme.text,
+                headerTitleStyle: { fontWeight: "bold" },
+              }}
+
             />
           </Stack.Navigator>
         </NavigationContainer>

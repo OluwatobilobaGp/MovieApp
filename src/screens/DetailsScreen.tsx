@@ -13,9 +13,6 @@ import ErrorMessage from "../components/ErrorMessage";
 import { useFavoriteStore } from "../store/favoriteStore";
 import { useTheme } from '../ThemeContext';
 
-
-
-
 const API_KEY = process.env.EXPO_PUBLIC_TMDB_APIKEY;
 const BASE_URL = process.env.EXPO_PUBLIC_TMDB_ENDPOINT;
 
@@ -96,7 +93,7 @@ export default function DetailsScreen({ route, navigation }: any) {
                 onPress={() => navigation.navigate("Favorites")}
                 className="bg-primary py-3 rounded-xl mx-4 mb-4"
             >
-                <Text className="text-white text-center text-lg font-bold">
+                <Text style={{color: theme.text}} className="text-white text-center text-lg font-bold">
                     View Favorites ❤️
                 </Text>
             </TouchableOpacity>

@@ -5,6 +5,7 @@ import {
     FlatList,
     Keyboard,
     StyleSheet,
+    Text,
 } from "react-native";
 import axios from "axios";
 import MovieCard from "../components/movieCard";
@@ -49,6 +50,8 @@ export default function SearchScreen({ navigation }: any) {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.header}>Search your Movie 🎬</Text>
+
             {/* Search Input */}
             <View style={styles.searchBox}>
                 <TextInput
@@ -87,26 +90,34 @@ export default function SearchScreen({ navigation }: any) {
 
 function createStyles(theme: any) {
     return StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: theme.background,
-    },
-    searchBox: {
-        flexDirection: "row",
-        alignItems: "center",
-        margin: 16,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 12,
-        backgroundColor: theme.background,
-    },
-    input: {
-        flex: 1,
-        fontSize: 16,
-        color: theme.text,
-    },
+        container: {
+            flex: 1,
+            backgroundColor: theme.background,
+        },
+        header: {
+            fontSize: 24, // text-2xl
+            fontWeight: "700", // fallback if custom font not loaded
+            margin: 16, // m-4
+            color: theme.text, // approximate text-dark-100
+            // fontFamily: "Quicksand-Bold", // if custom font loaded
+        },
+
+        searchBox: {
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 16,
+            paddingHorizontal: 12,
+            paddingVertical: 8,
+            borderWidth: 1,
+            borderColor: "#ddd",
+            borderRadius: 12,
+            backgroundColor: theme.background,
+        },
+        input: {
+            flex: 1,
+            fontSize: 16,
+            color: theme.text,
+        },
     });
 }
 

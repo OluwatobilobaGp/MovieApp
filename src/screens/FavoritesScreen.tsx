@@ -11,12 +11,16 @@ export default function FavoritesScreen() {
 
 
   if (favorites.length === 0) {
-    return <Text>No favorites yet ❤️</Text>;
+    return <View >
+      <Text style={{ color: theme.text, fontSize: 18, textAlign: 'center', marginTop: 20 }}>
+        No favorites yet ❤️
+        </Text>
+      </View>;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={ { color: theme.text }}>Popular Movies 🎬</Text>
+      <Text style={styles.header}>Your Favourite Movies 🎬</Text>
       <FlatList
         data={favorites}
         keyExtractor={(item) => item.id.toString()}
@@ -41,36 +45,43 @@ export default function FavoritesScreen() {
   );
 }
 function createStyles(theme: any) {
-    return StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: theme.background,
-            padding: 16,
-        },
-        poster: {
-            width: "100%",
-            height: 380,
-            borderRadius: 16,
-            marginBottom: 16,
-        },
-        title: {
-            fontSize: 14,
-            fontWeight: "bold",
-            color: theme.text,
-            marginBottom: 8,
-        },
-        subInfo: {
-            fontSize: 14,
-            color: "#666",
-            marginBottom: 12,
-        },
-        overview: {
-            fontSize: 16,
-            lineHeight: 22,
-            color: theme.text,
-            marginBottom: 20,
-        },
-        
-    });
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.background,
+      padding: 16,
+    },
+    header: {
+      fontSize: 24, // text-2xl
+      fontWeight: "700", // fallback if custom font not loaded
+      margin: 16, // m-4
+      color: theme.text, // approximate text-dark-100
+      // fontFamily: "Quicksand-Bold", // if custom font loaded
+    },
+    poster: {
+      width: "100%",
+      height: 380,
+      borderRadius: 16,
+      marginBottom: 16,
+    },
+    title: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: theme.text,
+      marginBottom: 8,
+    },
+    subInfo: {
+      fontSize: 14,
+      color: "#666",
+      marginBottom: 12,
+    },
+    overview: {
+      fontSize: 16,
+      lineHeight: 22,
+      color: theme.text,
+      marginBottom: 20,
+    },
+
+  });
 }
 
