@@ -10,11 +10,15 @@ import HomeScreen from "./src/screens/HomeScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import FavoritesScreen from "./src/screens/FavoritesScreen";
 import DetailsScreen from "./src/screens/DetailsScreen";
+import { useTheme } from './src/ThemeContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
 function TabNavigator() {
+ const { theme, mode, toggleTheme } = useTheme();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -25,7 +29,7 @@ function TabNavigator() {
           bottom: 20,
           left: 20,
           right: 20,
-          backgroundColor: "#fff",
+          backgroundColor: theme.background,
           borderRadius: 30,
           height: 80,
           paddingVertical: 20,
